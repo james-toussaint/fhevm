@@ -70,10 +70,6 @@ contract ProtocolStaking is AccessControlDefaultAdminRulesUpgradeable, ERC20Vote
 
     /// @dev Emitted when an account unstakes to the zero address.
     error InvalidUnstakeRecipient();
-    /// @dev The account is already an eligible account.
-    error EligibleAccountAlreadyExists(address account);
-    /// @dev The account is not an eligible account.
-    error EligibleAccountDoesNotExist(address account);
     /// @dev The account cannot be made eligible.
     error InvalidEligibleAccount(address account);
     /// @dev The tokens cannot be transferred.
@@ -191,8 +187,8 @@ contract ProtocolStaking is AccessControlDefaultAdminRulesUpgradeable, ERC20Vote
      * role earn rewards for staked tokens. Only callable by the `MANAGER_ROLE` role.
      * @param account The account to grant the `ELIGIBLE_ACCOUNT_ROLE` role to.
      */
-    function addEligibleAccount(address account) public onlyRole(MANAGER_ROLE) {
-        require(_grantRole(ELIGIBLE_ACCOUNT_ROLE, account), EligibleAccountAlreadyExists(account));
+    function addEligibleAccount(address account) public {
+        grantRole(ELIGIBLE_ACCOUNT_ROLE, account);
     }
 
     /**
@@ -200,8 +196,8 @@ contract ProtocolStaking is AccessControlDefaultAdminRulesUpgradeable, ERC20Vote
      * but maintains all existing rewards. Only callable by the `MANAGER_ROLE` role.
      * @param account The account to revoke the `ELIGIBLE_ACCOUNT_ROLE` role from.
      */
-    function removeEligibleAccount(address account) public onlyRole(MANAGER_ROLE) {
-        require(_revokeRole(ELIGIBLE_ACCOUNT_ROLE, account), EligibleAccountDoesNotExist(account));
+    function removeEligibleAccount(address account) public {
+        revokeRole(ELIGIBLE_ACCOUNT_ROLE, account);
     }
 
     /**

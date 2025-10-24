@@ -184,7 +184,8 @@ contract ProtocolStaking is AccessControlDefaultAdminRulesUpgradeable, ERC20Vote
 
     /**
      * @dev Adds the eligible account role to `account`. Only accounts with the eligible account
-     * role earn rewards for staked tokens. Only callable by the `MANAGER_ROLE` role.
+     * role earn rewards for staked tokens. Only callable by the role admin for 
+     * `ELIGIBLE_ACCOUNT_ROLE`. By default this is `MANAGER_ROLE`.
      * @param account The account to grant the `ELIGIBLE_ACCOUNT_ROLE` role to.
      */
     function addEligibleAccount(address account) public {
@@ -193,7 +194,8 @@ contract ProtocolStaking is AccessControlDefaultAdminRulesUpgradeable, ERC20Vote
 
     /**
      * @dev Removes the eligible account role from `account`. `account` stops to earn rewards
-     * but maintains all existing rewards. Only callable by the `MANAGER_ROLE` role.
+     * but maintains all existing rewards. Only callable by the role admin for 
+     * `ELIGIBLE_ACCOUNT_ROLE`. By default this is `MANAGER_ROLE`.
      * @param account The account to revoke the `ELIGIBLE_ACCOUNT_ROLE` role from.
      */
     function removeEligibleAccount(address account) public {
